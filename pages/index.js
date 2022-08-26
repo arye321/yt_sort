@@ -13,11 +13,11 @@ export default function Home() {
   const channel_link = useRef(null)
   async function submited(e) {
     e.preventDefault()
-    const start_date_value = start_date.current.valueAsDate
-    const end_date_value = end_date.current.valueAsDate
+    const start_date_value = start_date.current.valueAsDate.toISOString()
+    const end_date_value = end_date.current.valueAsDate.toISOString()
     const channel_link_value = channel_link.current.value
     console.log(start_date_value)
-    setInfo({ channel_link_value: channel_link_value, start_date_value: start_date_value, end_date_value: end_date_value })
+    setInfo({ channel_link: channel_link_value, start_date: start_date_value, end_date: end_date_value })
   }
   return (
     <div className="HomeDiv">
@@ -39,10 +39,10 @@ export default function Home() {
           className='channelLink'
           ref={channel_link}
           placeholder="https://www.youtube.com/channel/UCUujfNBK9uv3cIW-P5PX7vA"
-          autofocus
+          autoFocus
         />
       </form>
-
+      {/* <h4>{JSON.stringify(info)}</h4> */}
       <Results info={info} />
     </div>
   )

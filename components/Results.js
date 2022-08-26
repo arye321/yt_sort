@@ -1,25 +1,43 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function Results({info}) {
+export default function Results({ info }) {
+    const [results, setResults] = useState(null);
     useEffect(() => {
-        // console.log(info.start_date)
-        // console.log(info.end_date)
-        // console.log(info.channel_link)
-    }, [])
+        async function getResults() {
+            const response = await fetch(`/api/gettop`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(info)
+            });
+           
 
+            const data = await response.json();
+            console.log(data)
+            //map through data and create an array of objects with the video id and title
+            const results = data.items.map(item => (
+                <div>
+                {item.snippet.title}
+                <br />
+                {/* image of video */}
+                <img src={item.snippet.thumbnails.medium.url} alt="video thumbnail" />
+                {/* publish date */}
+                <p>{new Date(item.snippet.publishedAt).toLocaleDateString()}</p>
+              
+               </div>
+            )
+            );
+            setResults(results);
+        }
+        getResults();
 
+    }, [info])
 
-
-    const [result, setResult] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-    const [channelLink, setChannelLink] = useState(null)
 
     return (
         <div>
-            <h3>{JSON.stringify(info)}</h3>
+            {results}
         </div>
 
     );
