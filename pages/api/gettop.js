@@ -1,4 +1,4 @@
-export default async (req, res) => {
+export default async function handler(req, res) {
   // const data = {
   //     "kind": "youtube#searchListResponse",
   //     "etag": "LLwKQIwGzI381GtX6WqNzYbC6B4",
