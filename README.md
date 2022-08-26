@@ -1,6 +1,6 @@
 ## Youtube sort
 
-Sort a youtube channle's top videos by date
+Sort a youtube channle top videos by date
 
 .env:
 
