@@ -1,26 +1,36 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
+  /* wrap text */
+  
+  word-wrap: break-word;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: inherit;
+  flex-wrap: inherit;
+  justify-content: center;
+
+  font-size: calc( 4px + 2vmin );
+  color: white;
+  padding-right: 5%;
+  padding-left: 5%;
+  word-break: break-all;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  align-items: center;
+   
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+.channelLink{
+  width: calc(  70vmin ); 
+  font-size: calc( 2px + 2vmin );
 
-* {
-  box-sizing: border-box;
 }
-
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
   body {
     color: white;
-    background: black;
+    background: rgb(27, 27, 27);
   }
 }
