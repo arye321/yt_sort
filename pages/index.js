@@ -23,33 +23,40 @@ export default function Home() {
   }, [])
   async function submited(e) {
     e.preventDefault()
+    setError(null)
+    setInfo(null)
     if (start_date.current.value && end_date.current.value && channel_link.current.value) {
 
       const start_date_value = start_date.current.valueAsDate.toISOString()
       const end_date_value = end_date.current.valueAsDate.toISOString()
       const channel_link_value = channel_link.current.value
-      if (channel_link_value.includes('http')) {
 
-        // console.log(start_date_value)
-        if (channel_link_value.includes('/channel/')) {
-          setInfo({ channel_link: channel_link_value, start_date: start_date_value, end_date: end_date_value })
+        if (channel_link_value.includes('http') &&
+        (channel_link_value.includes("/c/") || channel_link_value.includes("/channel/") || channel_link_value.includes("/user/"))
+        ) {
+
+          // console.log(start_date_value)
+          if (channel_link_value.includes('/channel/')) {
+            setInfo({ channel_link: channel_link_value, start_date: start_date_value, end_date: end_date_value })
+          }
+          else {
+            setInfo({ link: channel_link_value, start_date: start_date_value, end_date: end_date_value })
+
+          }
         }
         else {
-          setInfo({ link: channel_link_value, start_date: start_date_value, end_date: end_date_value })
+          setError(<>
+            <p>Error</p>
+            <p>Must be full channel link</p>
+            <p>Examples: </p>
+            <p>https://www.youtube.com/channel/UC-9-kyTW8Zk</p>
+            <p>https://www.youtube.com/c/DJMag/</p>
+            <p>https://www.youtube.com/user/PewDiePie</p>
+          </>)
+
 
         }
-      }
-      else {
-        setError(<>
-          <p>Channel link must include http or https </p>
-          <p>Examples: </p>
-          <p>https://www.youtube.com/channel/UC-9-kyTW8Zk</p>
-          <p>https://www.youtube.com/c/DJMag/</p>
-          <p>https://www.youtube.com/user/PewDiePie</p>
-        </>)
-
-
-      }
+      
     }
     else {
       setError("Please fill out all fields")
