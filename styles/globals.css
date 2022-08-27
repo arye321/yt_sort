@@ -10,12 +10,11 @@ body {
   justify-content: center;
 
   font-size: calc(4px + 2vmin);
-  color: white;
+
   padding-right: 5%;
   padding-left: 5%;
   word-break: break-all;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
   align-items: center;
 
 }
@@ -26,18 +25,11 @@ body {
 
 }
 
-
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  body {
-    color: white;
-    background: rgb(27, 27, 27);
-  }
+p{
+  font-size: calc(2px + 2vmin);
 }
+
+
 .results{
   padding-top: 30px;
 }
