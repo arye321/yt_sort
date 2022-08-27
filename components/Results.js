@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from "react";
 export default function Results({ info }) {
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
+        setLoading(true);
         setError(null);
         setResults(null);
         async function getResults() {
@@ -32,7 +34,10 @@ export default function Results({ info }) {
                 );
             }
             else {
+                setLoading(false);
                 //map through data and create an array of objects with the video id and title
+                let count = 0
+
                 const results = data.items.map(item => {
                     const link = "https://www.youtube.com/watch?v=" + item.id.videoId
                     const title = item.snippet.title
@@ -41,18 +46,25 @@ export default function Results({ info }) {
                     const publish_date = new Date(item.snippet.publishedAt).toLocaleDateString('en-GB')
 
                     const description = item.snippet.description
+                    count += 1
                     return (<div key={item.id.videoId}>
 
-                        <h2>{item.snippet.title}  </h2>
+                        <h2>{count}) {title}  </h2>
                         <p>{publish_date}</p>
                         <p>{description}</p>
 
                         <br />
+                        <a href={link} rel="noopener noreferrer" target="_blank">{link}</a>
 
+                        <br />
+                        <br />
+                        
                         <a href={link} rel="noopener noreferrer" target="_blank">
 
                             <img src={thumb} alt={title} />
                         </a>
+                        <br />
+
                         <hr />
                     </div>)
                 }
@@ -68,8 +80,11 @@ export default function Results({ info }) {
 
     }, [info])
 
-
+    if (loading) {
+        return <div>Loading...</div>;
+    }
     return (
+
         <div>
             {error ? error : null}
             {results ? <h1>Results:</h1> : null}
