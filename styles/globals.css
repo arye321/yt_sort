@@ -25,11 +25,20 @@ body {
 
 }
 
-p{
+p {
   font-size: calc(5px + 2vmin);
 }
 
+.test {
+  /* center test */
+  display: flex;
+  flex-direction: inherit;
+  flex-wrap: inherit;
+  justify-content: center;
+  align-items: center;
 
-.results{
+}
+
+.results {
   padding-top: 30px;
 }

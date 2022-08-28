@@ -5,26 +5,13 @@ export default function Results({ info }) {
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const decodeEntities = (function() {
-        // this prevents any overhead from creating the object each time
-        var element = document.createElement('div');
-      
-        function decodeHTMLEntities (str) {
-          if(str && typeof str === 'string') {
-            // strip script/html tags
-            str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-            str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-            element.innerHTML = str;
-            str = element.textContent;
-            element.textContent = '';
-          }
-      
-          return str;
-        }
-      
-        return decodeHTMLEntities;
-      })();
-      
+    
+
+    //html special chars to string
+    const decodeHtmlCharCodes = str => 
+    str.replace(/(&#(\d+);)/g, (match, capture, charCode) => 
+      String.fromCharCode(charCode));
+  
       
       // I can't use a script tag in this example
       
@@ -46,6 +33,7 @@ export default function Results({ info }) {
             // console.log(data)
             // if error
             if (data.error) {
+                setLoading(false);
                 console.log(data.error);
                 setError(
                     <div className="alert" role="alert">
@@ -63,7 +51,7 @@ export default function Results({ info }) {
 
                 const results = data.items.map(item => {
                     const link = "https://www.youtube.com/watch?v=" + item.id.videoId
-                    const title = decodeEntities(item.snippet.title)
+                    const title = decodeHtmlCharCodes(item.snippet.title)
 
                     const thumb = item.snippet.thumbnails.medium.url
                     const publish_date = new Date(item.snippet.publishedAt).toLocaleDateString('en-GB')
@@ -99,7 +87,7 @@ export default function Results({ info }) {
         }
 
         getResults();
-
+        
 
     }, [info])
 
