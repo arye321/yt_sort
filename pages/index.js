@@ -3,7 +3,7 @@ import Image from 'next/image'
 //import useRef, useEffect, useState from 'react'
 import { useRef, useEffect, useState } from 'react'
 import Results from '../components/Results'
-
+import Script from 'next/script'
 export default function Home() {
 
   //useRef
@@ -64,6 +64,7 @@ export default function Home() {
   }
   return (
     <div className="HomeDiv">
+      <Script async defer data-website-id="8840883e-ff4a-4bbb-8069-16eebd24af9a" src="https://umamiv2.vercel.app/notumamilol.js" />
       <Head>
         <title>yt sort 😎</title>
         <link rel="icon" href="/favicon.ico" />
