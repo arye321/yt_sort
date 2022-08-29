@@ -5,20 +5,22 @@ export default function Results({ info }) {
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    
+    const [zeroResults, setzeroResults] = useState(null);
+
 
     //html special chars to string
-    const decodeHtmlCharCodes = str => 
-    str.replace(/(&#(\d+);)/g, (match, capture, charCode) => 
-      String.fromCharCode(charCode));
-  
-      
-      // I can't use a script tag in this example
-      
+    const decodeHtmlCharCodes = str =>
+        str.replace(/(&#(\d+);)/g, (match, capture, charCode) =>
+            String.fromCharCode(charCode));
+
+
+    // I can't use a script tag in this example
+
     useEffect(() => {
         setLoading(true);
         setError(null);
         setResults(null);
+        setzeroResults(null);
         async function getResults() {
             const response = await fetch(`/api/gettop`, {
                 method: "POST",
@@ -46,48 +48,59 @@ export default function Results({ info }) {
             }
             else {
                 setLoading(false);
-                //map through data and create an array of objects with the video id and title
-                let count = 0
 
-                const results = data.items.map(item => {
-                    const link = "https://www.youtube.com/watch?v=" + item.id.videoId
-                    const title = decodeHtmlCharCodes(item.snippet.title)
+                if (data.items.length == 0) {
+                    setzeroResults(
+                        <div>
+                            <h1>0 Results</h1>
 
-                    const thumb = item.snippet.thumbnails.medium.url
-                    const publish_date = new Date(item.snippet.publishedAt).toLocaleDateString('en-GB')
-
-                    const description = item.snippet.description
-                    count += 1
-                    return (<div key={item.id.videoId}>
-
-                        <h2>{count}) {title}  </h2>
-                        <p>{publish_date}</p>
-                        <p>{description}</p>
-
-                        <br />
-                        <a href={link} rel="noopener noreferrer" target="_blank">{link}</a>
-
-                        <br />
-                        <br />
-                        
-                        <a href={link} rel="noopener noreferrer" target="_blank">
-
-                            <img src={thumb} alt={title} />
-                        </a>
-                        <br />
-
-                        <hr />
-                    </div>)
+                        </div>
+                    );
                 }
+                else {
+                    //map through data and create an array of objects with the video id and title
+                    let count = 0
 
-                );
-                setResults(results);
+                    const results = data.items.map(item => {
+                        const link = "https://www.youtube.com/watch?v=" + item.id.videoId
+                        const title = decodeHtmlCharCodes(item.snippet.title)
+
+                        const thumb = item.snippet.thumbnails.medium.url
+                        const publish_date = new Date(item.snippet.publishedAt).toLocaleDateString('en-GB')
+
+                        const description = item.snippet.description
+                        count += 1
+                        return (<div key={item.id.videoId}>
+
+                            <h2>{count}) {title}  </h2>
+                            <p>{publish_date}</p>
+                            <p>{description}</p>
+
+                            <br />
+                            <a href={link} rel="noopener noreferrer" target="_blank">{link}</a>
+
+                            <br />
+                            <br />
+
+                            <a href={link} rel="noopener noreferrer" target="_blank">
+
+                                <img src={thumb} alt={title} />
+                            </a>
+                            <br />
+
+                            <hr />
+                        </div>)
+                    }
+
+                    );
+                    setResults(results);
+                }
             }
 
         }
 
         getResults();
-        
+
 
     }, [info])
 
@@ -97,6 +110,7 @@ export default function Results({ info }) {
     return (
 
         <div>
+            {zeroResults ? zeroResults : null}
             {error ? error : null}
             {results ? <h1>Results:</h1> : null}
             {results ? results : null}
