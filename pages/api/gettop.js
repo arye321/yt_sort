@@ -3,6 +3,11 @@ const fs = require('fs');
 export default async function handler(req, res) {
 
   const yt_api = process.env.YT_API
+  if (!yt_api) {
+    // throw js error
+    throw new Error('Please add YT_API to .env');
+
+  }
   let fin_channel_ID = null
   if (req.body.channel_link) {
 

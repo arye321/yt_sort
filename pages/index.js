@@ -15,6 +15,7 @@ export default function Home() {
   const end_date = useRef(null)
   const channel_link = useRef(null)
   const umami_id = process.env.NEXT_PUBLIC_UMAMI_ID
+  const umami_js = process.env.NEXT_PUBLIC_UMAMI_JS
   useEffect(() => {
     // focust on input
     channel_link.current.focus()
@@ -65,7 +66,9 @@ export default function Home() {
   }
   return (
     <div className="HomeDiv">
-      <Script async defer data-website-id={umami_id} src="https://umamiv2.vercel.app/notumamilol.js" />
+      {umami_id && umami_js ? <Script async defer data-website-id={umami_id} src={umami_js} /> : null}
+
+
       <Head>
         <title>yt sort 😎</title>
         <link rel="icon" href="/favicon.ico" />

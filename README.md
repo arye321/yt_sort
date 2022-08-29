@@ -9,7 +9,7 @@ git clone
 
 rename .env.exmpale to .env and paste your api keys there. 
 
-umami key is optional (analytics)
+umami id / js is optional (analytics)
 
 `yarn install`
 
