@@ -5,9 +5,10 @@ export default async function handler(req, res) {
   const yt_api = process.env.YT_API
   let fin_channel_ID = null
   if (req.body.channel_link) {
+
     //get last segment of channel link
     let channel_link = req.body.channel_link
-    var parts = 'http://mywebsite/folder/file'.split('/');
+    var parts = channel_link.split('/');
     fin_channel_ID = parts.pop() || parts.pop();  // handle potential trailing slash
 
   }

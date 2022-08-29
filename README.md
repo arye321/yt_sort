@@ -1,7 +1,16 @@
 ## Youtube sort
 
-Sort a youtube channle top videos by date
+Sort a Youtube channel top videos with date filter
 
-.env:
 
-`YT_API="your_youtube_api_X5aJABcTBGbeQ"`
+to dev:
+
+git clone
+
+rename .env.exmpale to .env and paste your api keys there. 
+
+umami key is optional (analytics)
+
+`yarn install`
+
+`yarn dev`
