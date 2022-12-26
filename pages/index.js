@@ -34,7 +34,8 @@ export default function Home() {
       const channel_link_value = channel_link.current.value
 
       if (channel_link_value.includes('http') &&
-        (channel_link_value.includes("/c/") || channel_link_value.includes("/channel/") || channel_link_value.includes("/user/"))
+
+        (channel_link_value.includes("/@") || channel_link_value.includes("/c/") || channel_link_value.includes("/channel/") || channel_link_value.includes("/user/"))
       ) {
 
         // console.log(start_date_value)
