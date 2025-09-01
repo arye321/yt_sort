@@ -36,11 +36,18 @@ export default async function handler(req, res) {
     return
   }
 
-  const { start_date, end_date } = req.body
+  const { start_date, end_date, pageToken } = req.body
 
   // console.log('a', { fin_channel_ID })
 
-  const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${fin_channel_ID}&publishedAfter=${start_date}&publishedBefore=${end_date}&order=viewCount&maxResults=25&type=video&key=${yt_api}`)
+  // Build the URL with optional pageToken parameter
+  let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${fin_channel_ID}&publishedAfter=${start_date}&publishedBefore=${end_date}&order=viewCount&maxResults=25&type=video&key=${yt_api}`
+  
+  if (pageToken) {
+    url += `&pageToken=${pageToken}`
+  }
+
+  const response = await fetch(url)
   const data = await response.json()
   // console.log({ data })
   // if api returns 400 error, return error message
@@ -48,12 +55,8 @@ export default async function handler(req, res) {
     res.status(400).json({ error: data })
   }
   else {
-
     res.status(200).json(data)
   }
 
-
   res.end();
-
-
 }
